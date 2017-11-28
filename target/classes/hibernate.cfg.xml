@@ -23,5 +23,6 @@
         <property name="current_session_context_class">thread</property>
         <!--映射文件的注册-->
         <mapping resource="hbm/hibernate.hbm.xml"/>
+        <mapping resource="hbm/school.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
