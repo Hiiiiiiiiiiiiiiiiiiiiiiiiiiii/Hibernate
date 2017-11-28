@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Properties;
 
 public class CriteriaTest {
     Session session;
@@ -109,4 +110,20 @@ public class CriteriaTest {
         System.out.println(school);
         session.getTransaction().commit();
     }
+    //   select count(*) count(id) form 使用 projectionList可以讲对个projection进行组合查询，用于一次查询多个聚合列的情况
+    @Test
+    public void projectionList(){
+        session.getTransaction().begin();
+        Criteria criteria = session.createCriteria(School.class);
+        ProjectionList projectionList = Projections.projectionList();
+        projectionList.add(Projections.count("id"));
+        projectionList.add(Projections.avg("id"));
+        criteria.setProjection(projectionList);
+        Object[] objects = (Object[]) criteria.uniqueResult();
+        System.out.println("count ->"+objects[0]);
+        System.out.println("avg ->"+objects[1]);
+        session.getTransaction().commit();
+//        criteria.setProjection(Projections.count("id"),Projections.avg("id"));
+    }
+
 }
